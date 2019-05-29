@@ -7,11 +7,6 @@ function getShuffle()
   return Shuffle();
 }
 
-function clicked(pic)
-{
-  alert("clicked" + pic);
-}
-
 class Game extends Component {
   
   state = {
@@ -34,13 +29,30 @@ class Game extends Component {
   //     })
   //     .catch(err => console.log(err));
   // }
+  
 
+  clicked(pic){
+    if (this.state.selectedPics.includes(pic))//reset game
+    {
+      this.setState({
+        selectedPics: []
+      })
+      console.log(this.state.selectedPics);
+    }else{
+      this.setState({
+        selectedPics: selectedPics.push(pic)
+      })
+      console.log(this.state.selectedPics);
+    }
+    
+  }
  
   componentDidMount(){
     this.setState({
       picsList: getShuffle()
     })
   }
+
 
   render() {
     return ( 
@@ -55,7 +67,7 @@ class Game extends Component {
                 this.state.picsList.map(pic => {
                   return (
                     <div
-                    onClick={clicked(pic)}
+                    onClick={(e) => this.clicked(pic)}
                       key={pic} 
                       className="col-12 col-sm-6 col-md-4"
                       style={{
