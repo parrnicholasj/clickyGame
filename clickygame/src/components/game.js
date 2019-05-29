@@ -32,19 +32,33 @@ class Game extends Component {
   
 
   clicked(pic){
-    if (this.state.selectedPics.includes(pic))//reset game
+    var tempArr = this.state.selectedPics;
+    if (tempArr.includes(pic))
     {
-      this.setState({
+      this.setState({//reset game you lose
+        picsList: getShuffle(),
         selectedPics: []
       })
-      console.log(this.state.selectedPics);
-    }else{
-      this.setState({
-        selectedPics: selectedPics.push(pic)
-      })
-      console.log(this.state.selectedPics);
+      alert("you lose")
+      return;
     }
-    
+    tempArr.push(pic);
+    this.setState({//first shuffle then do the rest
+      picsList: getShuffle(),
+      selectedPics: tempArr
+    })
+    console.log(this.state.selectedPics);
+
+    if (tempArr == this.state.picsList)
+    {
+      this.setState({//reset game
+        picsList: getShuffle(),
+        selectedPics: []
+      })
+      alert("you win!")
+      return;
+    }
+
   }
  
   componentDidMount(){
